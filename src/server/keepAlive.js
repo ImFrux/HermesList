@@ -8,7 +8,7 @@ exports.cronPing = () => {
 				if (res.statusCode == '200') {
 					console.log('Server was pinged.')
 				} else {
-					console.log(`Failed to ping with statusCode ${res.statusCode}`)
+					console.log(`Failed to ping ${process.env.URL_WEBSITE} with statusCode ${res.statusCode}`)
 				}
 			})
 			.on('error', (err) => {
