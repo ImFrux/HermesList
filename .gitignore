@@ -2,6 +2,7 @@
 node_modules/
 config.json
 debug/
+src/database/leveldb
 
 # Logs
 logs
