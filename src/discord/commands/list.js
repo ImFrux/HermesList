@@ -11,6 +11,8 @@ exports.run = (client, message, args) => {
 			})
 
 			message.channel.send('Currently watching on this channel :\n' + subjects.join('\n')).catch(console.error);
+		} else {
+			message.channel.send('Currently watching nothing. Use "watch" command to add subject.\n' + subjects.join('\n')).catch(console.error);
 		}
 	})
 }

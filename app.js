@@ -1,9 +1,10 @@
-var console = require('better-console');
 require('dotenv').config()
 const { Client, GatewayIntentBits } = require('discord.js');
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 const schedule = require('node-schedule');
 const { launchWatcher } = require('./src/process/watcher.js')
+const https = require('https')
+var console = require('better-console');
 require('./src/discord/loader.js')(client)
 
 // DISCORD
@@ -18,3 +19,6 @@ schedule.scheduleJob('*/5 * * * *', function () {
 	console.log('Launching watcher...')
 	launchWatcher(client)
 });
+
+// LAUNCH SERVER
+require('./src/server/server.js')
