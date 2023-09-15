@@ -1,10 +1,13 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { dbHelper } = require("../../database/getLevelDb.js")
 
-module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('ping')
-		.setDescription('Replies with Pong!'),
-	async execute(interaction) {
-		await interaction.reply('Pong!');
-	},
-};
+exports.run = (client, message, args) => {
+	let resText = "Available commands are :\n"
+
+	client.commands.forEach(element => {
+		resText += `${element.name}\n`
+	});
+
+	message.channel.send(resText).catch(console.error);
+}
+
+exports.name = "help";

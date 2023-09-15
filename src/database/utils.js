@@ -1,4 +1,5 @@
 const { dbHelper } = require("./getLevelDb.js")
+const { zipDirectory } = require('../server/utils')
 
 exports.retrieveSubjectId = (subject, callback) => {
 	dbHelper.get('servers', (err, ids) => {
@@ -28,4 +29,23 @@ exports.retrieveChannelMarketplace = (channelId, website, callback) => {
 			callback('EBAY_US')
 		}
 	})
+}
+
+exports.retrieveDatabase = (res, err) => {
+	let dateTime = new Date();
+	let date = ("0" + dateTime.getDate()).slice(-2);
+	let month = ("0" + (dateTime.getMonth() + 1)).slice(-2);
+	let year = dateTime.getFullYear();
+	let hours = dateTime.getHours();
+	let minutes = dateTime.getMinutes();
+	let seconds = dateTime.getSeconds();
+	let filename = `${__dirname}/save/${year}${month}${date}${hours}${minutes}${seconds}.zip`
+
+	zipDirectory(`${__dirname}/leveldb`, filename)
+		.then(_ => {
+			res(filename)
+		})
+		.catch((err) => {
+			console.log(err)
+		})
 }

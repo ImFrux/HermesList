@@ -15,15 +15,20 @@ module.exports = (client, message) => {
 	});
 	args.shift()
 
-	// Our standard argument/command name definition.
-	//const args = message.content.slice(client.config.commandName.length).trim().split(/ +/g);
-	const command = args.shift().toLowerCase();
+	let cmd = null
+	if (args.length > 0) {
+		// Our standard argument/command name definition.
+		const command = args.shift().toLowerCase();
 
-	// Grab the command data from the client.commands Enmap
-	const cmd = client.commands.get(command);
+		// Grab the command data from the client.commands Enmap
+		cmd = client.commands.get(command);
+	}
 
 	// If that command doesn't exist, silently exit and do nothing
-	if (!cmd) return;
+	if (!cmd) {
+		message.channel.send(`Command not found, use "help" to get the commands.`).catch(console.error);
+		return
+	};
 
 	// Run the command
 	cmd.run(client, message, args);
