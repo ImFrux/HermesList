@@ -1,5 +1,3 @@
-const { dbHelper } = require("../../database/getLevelDb.js")
-
 exports.run = (client, message, args) => {
 	let resText = "Available commands are :\n"
 

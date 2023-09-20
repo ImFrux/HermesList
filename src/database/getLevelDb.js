@@ -1,6 +1,6 @@
-const LevelDB = require("../../src/database/db.js");
+const LevelDB = require("./levelDb.js");
 const path = require("path");
 
-module.exports.dbHelper = new LevelDB(
+module.exports.leveldbHelper = new LevelDB(
 	path.resolve(__dirname, process.env.LEVELDB_FOLDER)
 );

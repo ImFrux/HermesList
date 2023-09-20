@@ -1,8 +1,8 @@
-const { dbHelper } = require("../../database/getLevelDb.js")
+const { leveldbHelper } = require("../../database/getLevelDb.js")
 const crypto = require("crypto")
 
 exports.run = (client, message, args) => {
-	dbHelper.get(message.guildId, (err, res) => {
+	leveldbHelper.get(message.guildId, (err, res) => {
 		if (res) {
 			let found = false
 			res.find((o, i) => {
@@ -16,7 +16,7 @@ exports.run = (client, message, args) => {
 			// ADD IT
 			if (!found) {
 				res.push({ user: message.author.id, channel: message.channelId, subject: args[0], subject_id: crypto.randomUUID() })
-				dbHelper.putAndSaveKey(message.guildId, res, 'servers', (err) => {
+				leveldbHelper.putAndSaveKey(message.guildId, res, 'servers', (err) => {
 					if (err) {
 						console.log('error put', err)
 					} else {
@@ -25,7 +25,7 @@ exports.run = (client, message, args) => {
 				})
 			}
 		} else {
-			dbHelper.putAndSaveKey(message.guildId, [{ user: message.author.id, channel: message.channelId, subject: args[0], subject_id: crypto.randomUUID() }], 'servers', (err) => {
+			leveldbHelper.putAndSaveKey(message.guildId, [{ user: message.author.id, channel: message.channelId, subject: args[0], subject_id: crypto.randomUUID() }], 'servers', (err) => {
 				if (err) {
 					console.log('error put', err)
 				} else {

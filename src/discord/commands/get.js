@@ -1,8 +1,8 @@
-const { dbHelper } = require("../../database/getLevelDb")
+const { leveldbHelper } = require("../../database/getLevelDb")
 
 function getEbayMarketplace(client, message, args) {
 	let keyLevel = 'channel_marketplace_' + message.channelId
-	dbHelper.get(keyLevel, (err, res) => {
+	leveldbHelper.get(keyLevel, (err, res) => {
 		if (res) {
 			message.channel.send(`Ebay marketplace is set to ${res.ebay} for this channel.`).catch(console.error);
 		} else {

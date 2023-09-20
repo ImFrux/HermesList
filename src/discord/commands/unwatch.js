@@ -1,8 +1,7 @@
-const { dbHelper } = require("../../database/getLevelDb.js")
-const { getAllWebsites } = require('../../process/utils.js')
+const { leveldbHelper } = require("../../database/getLevelDb.js")
 
 exports.run = (client, message, args) => {
-	dbHelper.get(message.guildId, (err, res) => {
+	leveldbHelper.get(message.guildId, (err, res) => {
 		if (res) {
 			let found = false
 			res.find((o, i) => {
@@ -13,7 +12,7 @@ exports.run = (client, message, args) => {
 					res.splice(i, 1);
 
 					// UPDATE IN DB
-					dbHelper.put(message.guildId, res, (err) => {
+					leveldbHelper.put(message.guildId, res, (err) => {
 						if (err) {
 							console.log('error put', err)
 						} else {

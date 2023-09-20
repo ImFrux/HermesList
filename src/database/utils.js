@@ -1,11 +1,11 @@
-const { dbHelper } = require("./getLevelDb.js")
+const { leveldbHelper } = require("./getLevelDb.js")
 const { zipDirectory } = require('../server/utils')
 
 exports.retrieveSubjectId = (subject, callback) => {
-	dbHelper.get('servers', (err, ids) => {
+	leveldbHelper.get('servers', (err, ids) => {
 		if (ids) {
 			ids.forEach(discordId => {
-				dbHelper.get(discordId, (err, channels) => {
+				leveldbHelper.get(discordId, (err, channels) => {
 					if (channels) {
 						channels.forEach((channel) => {
 							if (channel.subject === subject) {
@@ -22,11 +22,19 @@ exports.retrieveSubjectId = (subject, callback) => {
 exports.retrieveChannelMarketplace = (channelId, website, callback) => {
 	let keyLevel = 'channel_marketplace_' + channelId
 
-	dbHelper.get(keyLevel, (err, res) => {
+	leveldbHelper.get(keyLevel, (err, res) => {
 		if (res) {
 			callback(res[website])
 		} else {
-			callback('EBAY_US')
+
+			if (website == 'ebay') {
+				callback('EBAY_US')
+			} else if (website == 'vinted') {
+				callback('com')
+			}
+			else {
+				callback(null)
+			}
 		}
 	})
 }

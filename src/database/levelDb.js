@@ -7,9 +7,6 @@ class LevelDb {
 		this.db = sublevel(new Level(dbPath, { valueEncoding: "json" }));
 		//this.db = Sublevel(LevelUp(dbPath, { valueEncoding: "json" }))
 		//this.sub = db.sublevel('stuff')
-
-
-		// DEBUG @todo remove this + dependency (leveldown)
 	}
 
 	putAndSaveKey(key, value, keyList, callback) {

@@ -18,8 +18,6 @@ const fetchCookie = (domain = 'fr') => {
 			controller.abort();
 			const c = cookie.parse(sessionCookie)['secure, _vinted_fr_session'];
 			if (c) {
-				//console.log(c);
-				console.log(cookies)
 				cookies.set(domain, c);
 			}
 			resolve(c);
@@ -45,9 +43,10 @@ const parseVintedURL = (search_text, data) => { //order = "newest_first", domain
  */
 exports.searchVintedItems = (search_text, limit, domain, order = "newest_first") => {
 	return new Promise(async (resolve, reject) => {
-		var c = cookies.get('fr') || await fetchCookie('fr')
-		console.log(c, '____________________')
+		//var c = cookies.get('fr') || await fetchCookie('fr')
+		var c = await fetchCookie('fr')
 		const controller = new AbortController();
+		console.log(parseVintedURL(search_text, { per_page: limit }))
 		fetch(parseVintedURL(search_text, { per_page: limit }), {
 			headers: {
 				'user-agent': randomUseragent.getRandom().toString(),
